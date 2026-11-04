@@ -1,0 +1,8 @@
+year,driving_dataset,rmse,mae,mbe,true_total_gt,predicted_total_gt,total_bias_gt,total_bias_pct,true_melt_extent_km2,predicted_melt_extent_km2,melt_extent_bias_pct,source_figures
+2016,ERA-Interim,1.53,0.33,-0.23,757,607,-150,-19.8,140786,136131,-3.3,figures/evaluation/2016_era-interim_*
+2016,CESM2,1.61,0.41,0.21,863,1003,140,16.2,175923,225925,28.4,figures/evaluation/2016_cesm2_*
+2016,EC-Earth3,1.38,0.35,-0.02,899,886,-13,-1.4,173360,207985,20.0,figures/evaluation/2016_ecearth3_*
+2060,CESM2,2.38,0.82,-0.13,1850,1765,-85,-4.6,336731,365618,8.6,figures/evaluation/2060_cesm2_*
+2060,EC-Earth3,2.71,0.80,-0.32,1663,1450,-213,-12.8,295434,345648,17.0,figures/evaluation/2060_ecearth3_*
+2100,CESM2,2.74,0.89,-0.08,3424,3372,-52,-1.5,480016,496651,3.5,figures/evaluation/2100_cesm2_*
+2100,EC-Earth3,3.20,1.01,-0.50,2787,2460,-327,-11.7,429281,468654,9.2,figures/evaluation/2100_ecearth3_*
