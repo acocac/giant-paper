@@ -80,7 +80,7 @@ We use a convolutional conditional neural process (ConvCNP) [@gordon2020] to pre
 
 ### 4.2 Sensor placement experiment
 
-We follow the design of @andersson2023: context stations fixed at real station locations, a regular search grid, acquisition functions that rank candidate locations, and an analysis that adds the proposed stations in order and tracks model performance. TODO: station set, grid resolution, number of sensors K, acquisition functions, date sampling for search and analysis, the cross-window regret matrix for Q2. The sensitivity of placements to the search grid spacing is tested in Appendix A.
+We follow the design of @andersson2023: context stations fixed at real station locations, a regular search grid, acquisition functions that rank candidate locations, and an analysis that adds the proposed stations in order and tracks model performance. TODO: station set, grid resolution, number of sensors K, acquisition functions, date sampling for search and analysis, the cross-window regret matrix for Q2. The sensitivity of placements to the search grid spacing is tested in Appendix B.
 
 ### 4.3 Evaluation
 
@@ -125,7 +125,7 @@ TODO: Q1 (present window) and Q2 (near and long future; no-regret versus future-
 
 ## 6 Discussion
 
-**Transferability.** The growth in error with warming is consistent with the finding that emulators transfer poorly across climate regimes [@schlager_preprint]. Options to improve transfer include richer surface-state inputs, fine-tuning with a small amount of target-regime data [@dheeshjith2024], climate-invariant transformations [@beucler2024], and confidence-aware fallback to the physical model [@heuer2025]. We test fine-tuning in Appendix B. TODO: summarise its outcome here.
+**Transferability.** The growth in error with warming is consistent with the finding that emulators transfer poorly across climate regimes [@schlager_preprint]. Options to improve transfer include richer surface-state inputs, fine-tuning with a small amount of target-regime data [@dheeshjith2024], climate-invariant transformations [@beucler2024], and confidence-aware fallback to the physical model [@heuer2025]. We test fine-tuning in Appendix A. TODO: summarise its outcome here.
 
 **Limitations.** The emulator is trained on and evaluated against a regional climate model, not observations, so skill reflects agreement with HIRHAM5 and inherits its biases. The sensor placement seeach and analysis uses one year per window. The one-year search is short. TODO: add further limitations as the experiments mature.
 
@@ -133,19 +133,7 @@ TODO: Q1 (present window) and Q2 (near and long future; no-regret versus future-
 
 TODO.
 
-## Appendix A: Sensitivity to search resolution
-
-This appendix tests whether the proposed placements depend on the spacing of the search grid (Section 4.2). @andersson2023 used one query location per 100 km over Antarctica. The HIRHAM5 grid is much finer (about 5.5 km), and surface melt varies over shorter distances than air temperature, especially across the narrow ablation area along the ice-sheet margin. A coarse grid may miss informative sites there, while a fine grid makes the search more costly.
-
-**Setup.** We repeat the present-window search (Q1) with the same trained model, context stations, search dates and acquisition functions, and change only the grid spacing. TODO: grid spacings tested (e.g. native about 5.5 km, then coarser multiples), the ice mask applied to each grid, the number of candidate cells S per spacing, and the number of sensors K.
-
-**Comparison.** For each spacing we report (i) the analysis metrics against the number of added sensors (Section 4.3), (ii) the overlap of the top-K locations between spacings, matched within a distance tolerance because the candidate sets differ, and (iii) computational cost (number of forward passes and run time). TODO: distance tolerance for matching locations; whether the comparison is repeated for the future windows (Q2).
-
-**Results.** TODO. Figure A1: proposed locations for each spacing. Table A1: top-K overlap, analysis metrics and cost per spacing.
-
-**Choice for the main experiments.** TODO: state the spacing used in Section 4.2 and why.
-
-## Appendix B: Transfer learning across climate windows
+## Appendix A: Transfer learning across climate windows
 
 This appendix tests whether a model trained on the present window can be adapted to a future window with little future data, instead of training a separate model per window (Section 3.3). Emulators of HIRHAM5 melt transfer poorly from historical to future climate: relative error roughly doubles and the annual total is biased [@schlager_preprint]. Fine-tuning on a small amount of target-regime data is one proposed remedy [@dheeshjith2024].
 
@@ -159,7 +147,19 @@ All three are evaluated on the same analysis years (2060 and 2100) with the metr
 
 **Comparison.** We report RMSE, MAE, MBE, total melt bias and melt extent bias for each model, and fine-tuned skill as a function of the number of future years used. TODO: if the fine-tuned model reaches window-specific skill, also compare the sensor placements it proposes with those of the window-specific model.
 
-**Results.** TODO. Table B1: metrics per model, window and driving dataset. Figure B1: skill against the number of fine-tuning years.
+**Results.** TODO. Table A1: metrics per model, window and driving dataset. Figure A1: skill against the number of fine-tuning years.
+
+## Appendix B: Sensitivity to search resolution
+
+This appendix tests whether the proposed placements depend on the spacing of the search grid (Section 4.2). @andersson2023 used one query location per 100 km over Antarctica. The HIRHAM5 grid is much finer (about 5.5 km), and surface melt varies over shorter distances than air temperature, especially across the narrow ablation area along the ice-sheet margin. A coarse grid may miss informative sites there, while a fine grid makes the search more costly.
+
+**Setup.** We repeat the present-window search (Q1) with the same trained model, context stations, search dates and acquisition functions, and change only the grid spacing. TODO: grid spacings tested (e.g. native about 5.5 km, then coarser multiples), the ice mask applied to each grid, the number of candidate cells S per spacing, and the number of sensors K.
+
+**Comparison.** For each spacing we report (i) the analysis metrics against the number of added sensors (Section 4.3), (ii) the overlap of the top-K locations between spacings, matched within a distance tolerance because the candidate sets differ, and (iii) computational cost (number of forward passes and run time). TODO: distance tolerance for matching locations; whether the comparison is repeated for the future windows (Q2).
+
+**Results.** TODO. Figure B1: proposed locations for each spacing. Table B1: top-K overlap, analysis metrics and cost per spacing.
+
+**Choice for the main experiments.** TODO: state the spacing used in Section 4.2 and why.
 
 ## Data and code availability
 
