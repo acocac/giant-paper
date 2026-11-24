@@ -68,7 +68,7 @@ We analyse two windows. Within each, model training and sensor placement years d
 |---|---|---|---|---|
 | Present | 1990-2014 (25 yr) | 2016 |
 | Near future | 2035-2059 (25 yr) | 2060 |
-| Long future | 2065 | 2075-2099 (25 yr) | 2100 |
+| Long future | 2075-2099 (25 yr) | 2100 |
 
 The present window matches the years assessed in @schlager_preprint (1990-2016). One model is trained per window and driving dataset because regime matters more than the driving model [@schlager_preprint].
 
