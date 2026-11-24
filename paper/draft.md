@@ -62,13 +62,15 @@ We use the network in two ways. TODO: confirm both. First, the station locations
 
 ### 3.3 Climate windows and data split
 
-We analyse two windows. Within each, model training and sensor placement years do not overlap. 
+We analyse two windows. Within each, model training and sensor placement years do not overlap (Table 1).
 
 | Window | Train | Sensor placement |
 |---|---|---|
 | Present | 1990-2014 (25 yr) | 2016 |
 | Near future | 2035-2059 (25 yr) | 2060 |
 | Long future | 2075-2099 (25 yr) | 2100 |
+
+Table: Table 1. Model training and sensor placement years per climate window.
 
 The present window matches the years assessed in @schlager_preprint (1990-2016). One model is trained per window and driving dataset because regime matters more than the driving model [@schlager_preprint].
 
@@ -97,7 +99,7 @@ We report RMSE, MAE and mean bias error (MBE) of daily melt, the annual melt tot
 
 ### 5.1 Emulator evaluation
 
-Table 1 gives the results for 2016, 2060 and 2100 (evaluation plots in `figures/evaluation/`). Percentages are derived as (predicted - true) / true.
+Table 2 gives the results for 2016, 2060 and 2100 (evaluation plots in `figures/evaluation/`). Percentages are derived as (predicted - true) / true.
 
 | Year | Driving | RMSE | MAE | MBE | Total melt true -> predicted (Gt) | Total bias | Melt extent bias |
 |---|---|---|---|---|---|---|---|
@@ -109,9 +111,9 @@ Table 1 gives the results for 2016, 2060 and 2100 (evaluation plots in `figures/
 | 2100 | CESM2 | 3.67 | 1.24 | +0.81 | 3424 -> 3956 | +15.5% | +8.8% |
 | 2100 | EC-Earth3 | 3.57 | 1.26 | +0.87 | 2787 -> 3359 | +20.5% | +14.4% |
 
-Table: Table 1. Emulator evaluation per year and driving dataset. 2060 and 2100 are only available for CESM2 and EC-Earth3.
+Table: Table 2. Emulator evaluation per year and driving dataset. 2060 and 2100 are only available for CESM2 and EC-Earth3.
 
-Observations from Table 1 and the maps:
+Observations from Table 2 and the maps:
 
 - Errors grow with the year for both driving datasets. RMSE rises from 1.61 (2016) to 2.10 (2060) and 3.67 (2100) for CESM2, and from 1.38 to 2.07 and 3.57 for EC-Earth3. TODO: check against melt magnitude, which also rises strongly (true totals of 863 Gt in 2016 and 3424 Gt in 2100 for CESM2).
 - In both future years the emulator over-predicts melt for both driving datasets (positive MBE and total bias), and the over-prediction grows sharply by 2100 (+15.5% for CESM2, +20.5% for EC-Earth3).
@@ -141,7 +143,7 @@ This appendix tests whether a model trained on the present window can be adapted
 
 1. **Zero-shot:** the present-window model applied unchanged to the future window.
 2. **Fine-tuned:** the present-window model further trained on a subset of the future training years. TODO: number of years used (e.g. 1, 5, 10), which layers are updated, learning rate and number of epochs.
-3. **Window-specific:** the model trained on all 25 future training years (Table 1 baseline).
+3. **Window-specific:** the model trained on all 25 future training years (Table 2 baseline).
 
 All three are evaluated on the same analysis years (2060 and 2100) with the metrics of Section 4.3. TODO: number of seeds per configuration; seed selection on training and search years only.
 

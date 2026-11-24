@@ -252,9 +252,10 @@ included.
 split}\label{climate-windows-and-data-split}
 
 We analyse two windows. Within each, model training and sensor placement
-years do not overlap.
+years do not overlap (Table 1).
 
 \begin{table}[t]
+\caption{Model training and sensor placement years per climate window.}
 \begin{tabular}{lll}
 \tophline
 Window & Train & Sensor placement \\
@@ -313,7 +314,7 @@ per-year spread relative to the window average.
 
 \subsection{Emulator evaluation}\label{emulator-evaluation}
 
-Table 1 gives the results for 2016, 2060 and 2100 (evaluation plots in
+Table 2 gives the results for 2016, 2060 and 2100 (evaluation plots in
 \texttt{figures/evaluation/}). Percentages are derived as (predicted -
 true) / true.
 
@@ -336,7 +337,7 @@ Year & Driving & RMSE & MAE & MBE & Total melt true -\textgreater{} predicted (G
 \belowtable{}
 \end{table*}
 
-Observations from Table 1 and the maps:
+Observations from Table 2 and the maps:
 
 \begin{itemize}
 \tightlist
@@ -421,7 +422,7 @@ driving dataset (CESM2, EC-Earth3):
   epochs.
 \item
   \textbf{Window-specific:} the model trained on all 25 future training
-  years (Table 1 baseline).
+  years (Table 2 baseline).
 \end{enumerate}
 
 All three are evaluated on the same analysis years (2060 and 2100) with
