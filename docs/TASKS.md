@@ -1,16 +1,16 @@
 # Task list (Milestone 1)
 
-Mirrored as GitHub issues by `scripts/setup_github.sh`.
-
 ## Data and setup
 - [ ] Confirm run metadata: start years, scenarios and output variables for the CESM2 and EC-Earth3 HIRHAM5 runs
 - [ ] Confirm units for RMSE / MAE / MBE and the definition of melt extent (ME) on the evaluation plots
 - [ ] Define the fixed context station set (real station locations)
+  - [ ] Filter station locations to those over the ice mask
+  - [ ] Filter station locations to the train split
 
 ## Emulator
 - [ ] Train one ConvCNP per window and driving model on the agreed schedule (docs/windows_schedule.md)
 - [ ] At least five seeds per window; select on training and search years only
-- [ ] Add 2015, 2059 and 2099 evaluation results and per-year reporting
+- [ ] Add 2013-2015, 2058-2060 and 2098-2100 evaluation results and per-year reporting
 - [ ] Control: present-window model applied zero-shot to the future windows
 - [ ] Test one transferability improvement (surface-state inputs or fine-tuning) and compare bias and relative error
 

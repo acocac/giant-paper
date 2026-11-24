@@ -34,3 +34,41 @@ AIES-D-25-0090.1 was **not accessed** (publisher blocked automated access). TODO
 
 ## SMBnet (Puggaard et al., preprint)
 Physics-guided deep learning model of monthly SMB for Central West Greenland, 2002-2023, 0.25 degree grid, from satellite data and ERA5, trained against basin-integrated GRACE-based SMB. Not designed for future scenarios. Useful as an observation-based reference, not as a downscaler.
+
+## Prior work on station network design in polar regions (search of 2026-11-04)
+Found by web search. Full texts were **not accessed**: notes come from abstracts, publisher records and search snippets. Bibliographic details were checked against Crossref or arXiv. TODO: read the key papers (hakim2020, tardif2022, eksen2025) before citing specific numbers.
+
+### Greenland: how existing networks were sited
+- No study optimising AWS placement on the Greenland Ice Sheet was found.
+- PROMICE [@fausto2021]: sites were chosen to complement existing stations, within reach of heliports and airports. Older stations (GC-Net) lie mostly in the accumulation area, with few in the ablation area. Original 14 AWS in lower/upper pairs in seven regions (lower near the margin, upper near the ELA). Tripods sink with the melting surface. 18 of 26 stations have at least 85% surface-energy-balance coverage. (Read from the article web page.)
+- PROMICE | GC-Net [@fausto2026] (read from the article web page; tables are images and were not extracted): GEUS took over GC-Net in 2021; 52 active and historical sites; all in "slow-moving regions considered relatively safe from crevasse formation" (ice-velocity map, Fig. 1). v3 tripods (one boom) in the ablation area, two-boom masts in the accumulation area (flown in by Twin Otter). pypromice processing L0-L3; L3 is per site (stations within 4 km merged), hourly/daily/monthly. Dataset doi:10.22008/FK2/IW73UU. Historical GC-Net reprocessed by @vandecrux2023.
+- GrIOOS report [@grioos2019] lists "What is the optimal instrumentation and GrIOOS design?" as an open question.
+- Wang et al. [-@wang2026_essd] (ESSD preprint, under review) compile Greenland station records from 1941 onwards and state that most of the northern interior is undocumented.
+
+### Traditional: ensemble sensitivity (pick the site that most reduces total variance of a target field)
+- Hakim et al. [-@hakim2020]: Antarctic AWS for surface temperature, using AMPS (WRF) ensembles. Two cases: a blank slate, and conditioning on existing stations that report at least 90% of the time. With the existing stations kept, the top regions were Wilkes Land–Adélie Coast, Ellsworth Land and interior Queen Maud Land.
+- Tardif et al. [-@tardif2022]: checked those predictions with offline data assimilation, using random networks as the null baseline. Predicted and actual error reductions agree. Optimal networks beat random ones by up to about 50%, depending on network size and localisation distance. Interior East Antarctic Plateau stations matter most; coastal and Peninsula stations matter least.
+- Kim and Kim [-@kim2024]: Arctic Ocean buoys for 2-m temperature, using GFS for July–October 2016–2019 and a 1600 km localisation cutoff. Ten optimal buoys cut analysis variance by about 60% but 24-h forecast error variance by only about 3%. Optimal sites coincide with large error variance.
+- Relevance: the natural "traditional" baseline next to MI/variance criteria; also a precedent for checking placement predictions with an independent experiment.
+
+### Traditional: OSSEs and quantitative network design
+- Kaminski et al. [-@kaminski2015; -@kaminski2018]: quantitative network design with a variational assimilation system, applied to sea-ice thickness sampling (idealised IceBridge-style transects) and to satellite products for sea-ice forecasts.
+- Masutani et al. [-@masutani2013]: argue for OSSEs to optimise the sparse Arctic surface and upper-air network, and stress realistic sea ice, albedo and cloud in the nature run. Guidance only; gives no optimised layout.
+- Loose and Heimbach [-@loose2021]: adjoint plus Hessian uncertainty quantification to design ocean observing systems for chosen quantities of interest (North Atlantic examples; an Arctic application was planned but no publication was found).
+
+### Traditional: representativeness / clustering
+- Hoffman et al. [-@hoffman2013]: k-means ecoregions (present and future climate) to design an Alaska sampling network; notes that logistics often keep sites from the statistically ideal locations.
+- Pallandt et al. [-@pallandt2022]: pan-Arctic eddy-covariance network. Siberia, parts of Canada and mountains are under-represented; adding sites in the least-represented regions beats unguided choices.
+
+### Data-driven / machine learning
+- Krause et al. [-@krause2008]: greedy mutual-information placement with GPs, guaranteed to reach at least 1 − 1/e (about 63%) of the optimal gain; MI often beats entropy.
+- Andersson et al. [-@andersson2023] (see above). The NeurIPS 2022 workshop version ("Active learning with ConvGNPs...") is v1 of the same arXiv entry (2211.10381). It is still the only polar neural-process placement study found.
+- Eksen et al. [-@eksen2025]: ConvCNP with a mixture-density output head; acquisition = expected reduction in *epistemic* uncertainty, which reduces model error more than acquisition on total uncertainty. No study region named in the abstract. Directly relevant to our ConvCNP set-up.
+- Shaju et al. [-@shaju2025]: greedy placement of thermometers in ice boreholes (EPICA DML, GRIP) using heat-transfer simulations; up to 10× lower interpolation error than linear or exponential spacing. A vertical rather than spatial problem, but a polar Greenland precedent.
+- Not polar-specific: reinforcement learning with a Transformer to improve placement heuristics [@wang2023]; GP column-subset selection versus POD-DEIM on sea surface temperature [@chen2026].
+
+### Gaps this paper can address
+1. No optimised AWS network design exists for the Greenland Ice Sheet.
+2. Polar placement studies target temperature or sea ice, not surface melt or surface mass balance.
+3. No study tests whether an optimal network stays optimal under climate change (our 2016 / 2060 / 2100 windows).
+4. Ensemble sensitivity (hakim2020, tardif2022) is a natural traditional baseline alongside random and MI-based criteria.

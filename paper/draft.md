@@ -25,41 +25,77 @@ We address two questions:
 
 TODO: contributions paragraph.
 
-## 2 Data
+## 2 Previous work and gaps
 
-### 2.1 HIRHAM5 simulations
+> TODO: the summaries below come from abstracts and publisher records; read the full texts of @hakim2020, @tardif2022 and @eksen2025 before keeping specific numbers. "To our knowledge" claims rest on a web search of November 2026.
+
+Methods for designing polar observing networks fall into two families. Traditional methods use a physical model and its error statistics. Ensemble sensitivity ranks candidate sites by how much an observation there would reduce the total variance of a target field. It was used to place automatic weather stations (AWS) for Antarctic surface temperature [@hakim2020]. Its predictions agreed with data-assimilation experiments, and optimal networks beat random ones by up to about 50% [@tardif2022]. It has also been used to place Arctic Ocean buoys for 2-m temperature [@kim2024]. Observing system simulation experiments (OSSEs) and quantitative network design evaluate hypothetical networks inside a data-assimilation system. They have been applied mainly to Arctic sea ice [@kaminski2015; @kaminski2018] and advocated for the Arctic surface network [@masutani2013]. Representativeness-based designs cluster the domain on environmental covariates and add sites to the least-represented clusters [@hoffman2013; @pallandt2022]. Data-driven methods instead rank sites with a statistical or machine-learning model. Examples are greedy mutual-information placement with Gaussian processes [@krause2008], neural-process placement for Antarctic temperature [@andersson2023], acquisition on epistemic uncertainty with ConvCNPs [@eksen2025], and greedy placement of borehole thermometers at Greenland and Antarctic ice-core sites [@shaju2025].
+
+Against this background, we identify four gaps.
+
+1. **No optimised network for the Greenland Ice Sheet.** To our knowledge, AWS placement on the ice sheet has not been optimised. PROMICE sites were chosen to complement existing stations within reach of airports and heliports [@fausto2021], in slow-moving regions considered relatively safe from crevasses [@fausto2026]. The design of a Greenland observing system remains an open question [@grioos2019], and most of the northern interior has no station records [@wang2026_essd].
+2. **No placement study for surface melt.** Polar placement studies target air temperature [@hakim2020; @tardif2022; @kim2024; @andersson2023] or sea ice [@kaminski2015; @kaminski2018]. None targets surface melt or surface mass balance, which are spatially more heterogeneous and switch on and off with the seasons.
+3. **No test of placement stability under climate change.** Existing studies optimise for a single climate period. Whether an optimal network stays optimal as the climate warms, and which sites are informative in both present and future climates, has not been tested.
+4. **No comparison of traditional and data-driven criteria.** Ensemble-sensitivity and machine-learning placements have each been compared with random baselines, but, to our knowledge, not with each other on the same problem. TODO: confirm, and decide whether we include an ensemble-sensitivity baseline.
+
+This study addresses gaps 1 to 3 directly, through placement for Greenland surface melt across present, near-future and long-future windows (Q1 and Q2). TODO: gap 4, depending on the baseline decision.
+
+## 3 Data
+
+### 3.1 HIRHAM5 simulations
 
 HIRHAM5 is a regional climate model from the Danish Meteorological Institute that combines HIRLAM dynamics with ECHAM5 physics on a 0.05 degree (about 5.5 km) rotated polar grid [@lucaspicher2012]. Its output forces an offline multilayer snow model for meltwater percolation, retention and refreezing [@langen2017]; see also @mottram2017. We use HIRHAM5 runs forced by ERA-Interim, CESM2 and EC-Earth3. TODO: period, scenario and variables of each run (the near-future runs in particular).
 
-### 2.2 Climate windows and data split
+### 3.2 PROMICE and GC-Net automatic weather stations
 
-We analyse three windows. Within each, train, search and analysis years do not overlap. The first ten years of every run only supply 10-year-mean inputs.
+The Programme for Monitoring of the Greenland Ice Sheet (PROMICE) has run automatic weather stations (AWS) on the ice sheet since 2007 [@fausto2021]. The network was designed to fill a gap. Earlier networks, chiefly the Greenland Climate Network (GC-Net), started in 1990 and extended in 1995, placed most of their stations in the accumulation area, leaving the ablation area covered by only a handful of sites. PROMICE sites were chosen to best complement the existing stations while staying within range of heliports and airports [@fausto2021]. All sites lie in slow-moving regions considered relatively safe from crevasse formation [@fausto2026]. Siting therefore balanced coverage against logistics and safety; it was not the result of a formal optimisation.
 
-| Window | Runs start | Input-only years | Train | Search | Analysis |
-|---|---|---|---|---|---|
-| Present | 1980 | 1980-1989 | 1990-2013 | 2014 | 2015-2016 |
-| Near future | 2025 | 2025-2034 | 2035-2057 | 2058 | 2059-2060 |
-| Long future | 2065 | 2065-2074 | 2075-2097 | 2098 | 2099-2100 |
+The original PROMICE network had 14 AWS, deployed as pairs in seven regions around the ice sheet (KPC, SCO, TAS, QAS, NUK, UPE and THU). In each region, the lower (L) station sits near the ice-sheet margin in the low-elevation ablation area, and the upper (U) station sits higher in the ablation area, near or at the equilibrium-line altitude. Some regions later gained a middle (M) station, and a few have a bedrock (B) station off the ice [@fausto2021]. In 2021 the Geological Survey of Denmark and Greenland (GEUS) took over GC-Net and integrated it with PROMICE. The combined PROMICE | GC-Net dataset covers 52 active and historical sites, in both the ablation and the accumulation area [@fausto2026]. Historical GC-Net records were reprocessed so that they are compatible with present-day accumulation-area data [@vandecrux2023]. TODO: station elevations (Table 1 of @fausto2021; Table 3 of @fausto2026, neither extracted), and the split between operational and decommissioned sites.
 
-The present window matches the years assessed in @schlager_preprint (1990-2016). The 10-year means for analysis years include weather from training years but never target years. One model is trained per window and driving dataset because regime matters more than the driving model [@schlager_preprint].
+Station design follows the surface. In the ablation area, each station is a free-standing aluminium tripod with one instrument boom, about 2.7 m above the surface. The tripod rests on the ice and sinks with it as the surface ablates, with a battery box hung beneath the mast to lower the centre of gravity. Sonic rangers on the tripod and on a separate stake assembly drilled about 7 m into the ice measure surface height change. A pressure transducer in a hose drilled typically more than 10 m into the ice measures ablation directly [@fausto2021]. Since 2021, a new tripod version ("v3") has replaced the older one at most ablation sites. In the accumulation area, stations are masts with two booms, giving measurements at two levels; tripods can be carried by helicopter, whereas the larger masts were flown in by Twin Otter aircraft [@fausto2026]. Stations are serviced during visits of 2–4 h, and the remote KPC stations are visited only every 3–4 years [@fausto2021; @fausto2026].
 
-## 3 Methods
+Each station measures air pressure, air temperature, relative humidity, wind speed and direction, upward and downward shortwave and longwave radiation, surface height, ablation (ablation-area stations), subsurface temperature (a thermistor string to 10 m depth), station tilt and GPS position. Derived variables include surface temperature and turbulent heat fluxes. Measurements are taken every 10 min and hourly averages are transmitted by Iridium; older stations sent only daily averages in winter. The open-source pypromice software processes the data from raw (L0) to research-ready (L3) products. The L3 product is given per site, at hourly, daily and monthly resolution, and merges successive stations within 4 km of one another into a single site record [@fausto2026]. The dataset is a living product, updated as new data arrive, with near-real-time access and a manually quality-controlled monthly release (doi:10.22008/FK2/IW73UU).
 
-### 3.1 Emulator
+Data quality varies between stations. 18 of the 26 stations analysed by @fausto2021 have at least 85% data coverage for the surface energy balance variables; the others suffered power failures, toppling, snow burial or crevasse formation. Some stations were relocated, and ice flow moves all of them over time. Known error sources include riming, instrument burial and azimuth drift, and turbulent fluxes and rainfall corrections are uncertain [@fausto2026].
+
+We use the network in two ways. TODO: confirm both. First, the station locations define the context set of existing stations in the placement experiment (Section 4.2), with values taken from the HIRHAM5 output at those locations rather than from the observations, following @andersson2023. The 4 km site radius is close to the HIRHAM5 grid spacing (about 5.5 km), so each site maps to a single grid cell. Second, the network's design (dense coverage of the ablation area at pairs of fixed elevations, sparse coverage of the interior and the north [@wang2026_essd]) is the baseline that the proposed placements are compared against. TODO: which sites (operational in which years, given the 2015-2016 analysis years), and whether historical GC-Net sites are included.
+
+### 3.3 Climate windows and data split
+
+We analyse two windows. Within each, model training and sensor placement years do not overlap. 
+
+| Window | Train | Sensor placement |
+|---|---|---|---|---|
+| Present | 1990-2014 (25 yr) | 2016 |
+| Near future | 2035-2059 (25 yr) | 2060 |
+| Long future | 2065 | 2075-2099 (25 yr) | 2100 |
+
+The present window matches the years assessed in @schlager_preprint (1990-2016). One model is trained per window and driving dataset because regime matters more than the driving model [@schlager_preprint].
+
+## 4 Methods
+
+### 4.1 Emulator
 
 We use a convolutional conditional neural process (ConvCNP) [@gordon2020] to predict daily melt. TODO: inputs, architecture, loss, optimiser, number of seeds (planned: at least five per window), seed selection (training and search years only).
 
-### 3.2 Sensor placement experiment
+### 4.2 Sensor placement experiment
 
-We follow the design of @andersson2023: context stations fixed at real station locations, a regular search grid, acquisition functions that rank candidate locations, and an analysis that adds the proposed stations in order and tracks model performance. TODO: station set, grid resolution, number of sensors K, acquisition functions, date sampling for search and analysis, the cross-window regret matrix for Q2.
+We follow the design of @andersson2023: context stations fixed at real station locations, a regular search grid, acquisition functions that rank candidate locations, and an analysis that adds the proposed stations in order and tracks model performance. TODO: station set, grid resolution, number of sensors K, acquisition functions, date sampling for search and analysis, the cross-window regret matrix for Q2. The sensitivity of placements to the search grid spacing is tested in Appendix A.
 
-### 3.3 Evaluation
+### 4.3 Evaluation
+
+We assess the trained ConvCNP model’s ability to reconstruct surface melt fields by analysing results
+from daily test tasks in the 2015-2016 testing periods. The context observations for surface melt
+tasks are provided at the locations of the 39 PROMICE/GC-Net station active as of June 2017,
+defined as those having at least one measurement in the previous year. This task setup
+corresponds to the initialization used for the sensor placement experiments and thus enables
+us to evaluate the model’s suitability for that application.
 
 We report RMSE, MAE and mean bias error (MBE) of daily melt, the annual melt total (Gt) and the melt extent (km^2), for each analysis year. TODO: units of RMSE, MAE and MBE (not labelled on the source plots), and per-year spread relative to the window average.
 
-## 4 Results
+## 5 Results
 
-### 4.1 Emulator evaluation
+### 5.1 Emulator evaluation
 
 Table 1 gives the results for 2016, 2060 and 2100 (evaluation plots in `figures/evaluation/`). Percentages are derived as (predicted - true) / true.
 
@@ -68,33 +104,62 @@ Table 1 gives the results for 2016, 2060 and 2100 (evaluation plots in `figures/
 | 2016 | ERA-Interim | 1.53 | 0.33 | -0.23 | 757 -> 607 | -19.8% | -3.3% |
 | 2016 | CESM2 | 1.61 | 0.41 | +0.21 | 863 -> 1003 | +16.2% | +28.4% |
 | 2016 | EC-Earth3 | 1.38 | 0.35 | -0.02 | 899 -> 886 | -1.4% | +20.0% |
-| 2060 | CESM2 | 2.38 | 0.82 | -0.13 | 1850 -> 1765 | -4.6% | +8.6% |
-| 2060 | EC-Earth3 | 2.71 | 0.80 | -0.32 | 1663 -> 1450 | -12.8% | +17.0% |
-| 2100 | CESM2 | 2.74 | 0.89 | -0.08 | 3424 -> 3372 | -1.5% | +3.5% |
-| 2100 | EC-Earth3 | 3.20 | 1.01 | -0.50 | 2787 -> 2460 | -11.7% | +9.2% |
+| 2060 | CESM2 | 2.10 | 0.70 | +0.03 | 1850 -> 1872 | +1.2% | +3.3% |
+| 2060 | EC-Earth3 | 2.07 | 0.62 | +0.10 | 1663 -> 1726 | +3.8% | +13.4% |
+| 2100 | CESM2 | 3.67 | 1.24 | +0.81 | 3424 -> 3956 | +15.5% | +8.8% |
+| 2100 | EC-Earth3 | 3.57 | 1.26 | +0.87 | 2787 -> 3359 | +20.5% | +14.4% |
 
 Table: Table 1. Emulator evaluation per year and driving dataset. 2060 and 2100 are only available for CESM2 and EC-Earth3.
 
 Observations from Table 1 and the maps:
 
-- Errors grow with the year for both driving datasets. RMSE rises from 1.61 (2016) to 2.38 (2060) and 2.74 (2100) for CESM2, and from 1.38 to 2.71 and 3.20 for EC-Earth3. TODO: check against melt magnitude, which also rises strongly (true totals of 863 Gt in 2016 and 3424 Gt in 2100 for CESM2).
-- CESM2 has the lowest RMSE, bias and extent error in both future years; EC-Earth3's MAE is slightly lower in 2060.
-- The EC-Earth3 residual maps show strong under-prediction along the western margin in 2060 and 2100 (visual reading).
+- Errors grow with the year for both driving datasets. RMSE rises from 1.61 (2016) to 2.10 (2060) and 3.67 (2100) for CESM2, and from 1.38 to 2.07 and 3.57 for EC-Earth3. TODO: check against melt magnitude, which also rises strongly (true totals of 863 Gt in 2016 and 3424 Gt in 2100 for CESM2).
+- In both future years the emulator over-predicts melt for both driving datasets (positive MBE and total bias), and the over-prediction grows sharply by 2100 (+15.5% for CESM2, +20.5% for EC-Earth3).
+- CESM2 has the lowest bias and extent error in both future years; EC-Earth3 has a slightly lower RMSE in both future years and a lower MAE in 2060.
+- The residual maps show over-prediction concentrated along the ice-sheet margins, strongest along the northern and eastern margins for EC-Earth3 in 2060, and spreading across most of the margin for both datasets in 2100 (visual reading).
 - Single-year results are sensitive to how typical the year is. TODO: compare each analysis year with the window average melt.
 
-### 4.2 Sensor placement results
+### 5.2 Sensor placement results
 
 TODO: Q1 (present window) and Q2 (near and long future; no-regret versus future-only locations).
 
-## 5 Discussion
+## 6 Discussion
 
-**Transferability.** The growth in error with warming is consistent with the finding that emulators transfer poorly across climate regimes [@schlager_preprint]. Options to improve transfer include richer surface-state inputs, fine-tuning with a small amount of target-regime data [@dheeshjith2024], climate-invariant transformations [@beucler2024], and confidence-aware fallback to the physical model [@heuer2025]. TODO: report which of these we test.
+**Transferability.** The growth in error with warming is consistent with the finding that emulators transfer poorly across climate regimes [@schlager_preprint]. Options to improve transfer include richer surface-state inputs, fine-tuning with a small amount of target-regime data [@dheeshjith2024], climate-invariant transformations [@beucler2024], and confidence-aware fallback to the physical model [@heuer2025]. We test fine-tuning in Appendix B. TODO: summarise its outcome here.
 
-**Limitations.** The emulator is trained on and evaluated against a regional climate model, not observations, so skill reflects agreement with HIRHAM5 and inherits its biases. The analysis uses two years per window. The one-year search is short. TODO: add further limitations as the experiments mature.
+**Limitations.** The emulator is trained on and evaluated against a regional climate model, not observations, so skill reflects agreement with HIRHAM5 and inherits its biases. The sensor placement seeach and analysis uses one year per window. The one-year search is short. TODO: add further limitations as the experiments mature.
 
-## 6 Conclusions
+## 7 Conclusions
 
 TODO.
+
+## Appendix A: Sensitivity to search resolution
+
+This appendix tests whether the proposed placements depend on the spacing of the search grid (Section 4.2). @andersson2023 used one query location per 100 km over Antarctica. The HIRHAM5 grid is much finer (about 5.5 km), and surface melt varies over shorter distances than air temperature, especially across the narrow ablation area along the ice-sheet margin. A coarse grid may miss informative sites there, while a fine grid makes the search more costly.
+
+**Setup.** We repeat the present-window search (Q1) with the same trained model, context stations, search dates and acquisition functions, and change only the grid spacing. TODO: grid spacings tested (e.g. native about 5.5 km, then coarser multiples), the ice mask applied to each grid, the number of candidate cells S per spacing, and the number of sensors K.
+
+**Comparison.** For each spacing we report (i) the analysis metrics against the number of added sensors (Section 4.3), (ii) the overlap of the top-K locations between spacings, matched within a distance tolerance because the candidate sets differ, and (iii) computational cost (number of forward passes and run time). TODO: distance tolerance for matching locations; whether the comparison is repeated for the future windows (Q2).
+
+**Results.** TODO. Figure A1: proposed locations for each spacing. Table A1: top-K overlap, analysis metrics and cost per spacing.
+
+**Choice for the main experiments.** TODO: state the spacing used in Section 4.2 and why.
+
+## Appendix B: Transfer learning across climate windows
+
+This appendix tests whether a model trained on the present window can be adapted to a future window with little future data, instead of training a separate model per window (Section 3.3). Emulators of HIRHAM5 melt transfer poorly from historical to future climate: relative error roughly doubles and the annual total is biased [@schlager_preprint]. Fine-tuning on a small amount of target-regime data is one proposed remedy [@dheeshjith2024].
+
+**Setup.** We compare three models for each future window and driving dataset (CESM2, EC-Earth3):
+
+1. **Zero-shot:** the present-window model applied unchanged to the future window.
+2. **Fine-tuned:** the present-window model further trained on a subset of the future training years. TODO: number of years used (e.g. 1, 5, 10), which layers are updated, learning rate and number of epochs.
+3. **Window-specific:** the model trained on all 25 future training years (Table 1 baseline).
+
+All three are evaluated on the same analysis years (2060 and 2100) with the metrics of Section 4.3. TODO: number of seeds per configuration; seed selection on training and search years only.
+
+**Comparison.** We report RMSE, MAE, MBE, total melt bias and melt extent bias for each model, and fine-tuned skill as a function of the number of future years used. TODO: if the fine-tuned model reaches window-specific skill, also compare the sensor placements it proposes with those of the window-specific model.
+
+**Results.** TODO. Table B1: metrics per model, window and driving dataset. Figure B1: skill against the number of fine-tuning years.
 
 ## Data and code availability
 

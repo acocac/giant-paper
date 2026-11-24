@@ -20,3 +20,8 @@ paper/build/
 # OS / editor
 .DS_Store
 .vscode/
+
+# Custom
+.idea/
+**/.DS_Store
+.claude/
