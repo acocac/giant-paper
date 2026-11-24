@@ -1,76 +1,42 @@
-% Options for packages loaded elsewhere
-\PassOptionsToPackage{unicode}{hyperref}
-\PassOptionsToPackage{hyphens}{url}
-\documentclass[
-]{article}
-\usepackage{xcolor}
-\usepackage{amsmath,amssymb}
-\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
-\usepackage{iftex}
-\ifPDFTeX
-  \usepackage[T1]{fontenc}
-  \usepackage[utf8]{inputenc}
-  \usepackage{textcomp} % provide euro and other symbols
-\else % if luatex or xetex
-  \usepackage{unicode-math} % this also loads fontspec
-  \defaultfontfeatures{Scale=MatchLowercase}
-  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
-\fi
-\usepackage{lmodern}
-\ifPDFTeX\else
-  % xetex/luatex font selection
-\fi
-% Use upquote if available, for straight quotes in verbatim environments
-\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
-\IfFileExists{microtype.sty}{% use microtype if available
-  \usepackage[]{microtype}
-  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
-}{}
-\makeatletter
-\@ifundefined{KOMAClassName}{% if non-KOMA class
-  \IfFileExists{parskip.sty}{%
-    \usepackage{parskip}
-  }{% else
-    \setlength{\parindent}{0pt}
-    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
-}{% if KOMA class
-  \KOMAoptions{parskip=half}}
-\makeatother
-\usepackage{longtable,booktabs,array}
-\usepackage{caption}
-\captionsetup[table]{skip=6pt}
-\newcounter{none} % for unnumbered tables
-\usepackage{calc} % for calculating minipage widths
-% Correct order of tables after \paragraph or \subparagraph
-\usepackage{etoolbox}
-\makeatletter
-\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
-\makeatother
-\setlength{\emergencystretch}{3em} % prevent overfull lines
-\providecommand{\tightlist}{%
-  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
-\usepackage[]{natbib}
-\bibliographystyle{plainnat}
-\usepackage{bookmark}
-\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
-\urlstyle{same}
-% fallback for those not using the hyperref driver hyperxmp:
-\makeatletter
-\@ifundefined{xmpquote}{\newcommand{\xmpquote}[1]{#1}}{}
-\makeatother
-\hypersetup{
-  pdftitle={Climate-aware sensor placement for Greenland Ice Sheet surface melt (working title)},
-  pdfauthor={TODO: authors and affiliations},
-  hidelinks,
-  pdfcreator={LaTeX via pandoc}}
+%% Generated from paper/draft.md by `make overleaf` (pandoc + paper/copernicus/).
+%% Edit draft.md, not this file: it is overwritten on every build.
+%% Copernicus Publications LaTeX package 7.16, The Cryosphere (tc), manuscript (discussion) layout.
+\documentclass[tc, manuscript]{copernicus}
+
+%% Helpers for pandoc output
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+\begin{document}
 
 \title{Climate-aware sensor placement for Greenland Ice Sheet surface
 melt (working title)}
-\author{TODO: authors and affiliations}
-\date{}
 
-\begin{document}
+%% TODO: authors and affiliations. Add `authors` and `affiliations` to the YAML header of draft.md:
+%%   authors:      [{given: Ana, surname: Smith, affil: 1, email: ana@example.org}]
+%%   affiliations: [{id: 1, address: "Institute, City, Country"}]
+\Author[1][TODO@example.org]{TODO}{TODO}
+\affil[1]{TODO}
+
+\runningtitle{TODO}
+
+\runningauthor{TODO}
+
+\received{}
+\pubdiscuss{}
+\revised{}
+\accepted{}
+\published{}
+
+\firstpage{1}
+
 \maketitle
+
+\begin{abstract}
+TODO. Write last. Suggested structure: motivation (sparse, incrementally
+built in-situ network), approach (probabilistic ML emulator of HIRHAM5
+melt used to rank sensor locations), main results (emulator skill under
+present and future climates; where placements change), implication.
+\end{abstract}
 
 \begin{quote}
 Draft status: scaffold. Statements about the project design are taken
@@ -79,14 +45,7 @@ marks missing content. Numbers come from
 \texttt{results/evaluation\_metrics.csv}.
 \end{quote}
 
-\subsection{Abstract}\label{abstract}
-
-TODO. Write last. Suggested structure: motivation (sparse, incrementally
-built in-situ network), approach (probabilistic ML emulator of HIRHAM5
-melt used to rank sensor locations), main results (emulator skill under
-present and future climates; where placements change), implication.
-
-\subsection{1 Introduction}\label{introduction}
+\introduction
 
 The Greenland Ice Sheet is losing mass, and surface melt is a major
 driver of that loss. TODO: cite. Existing in-situ networks such as
@@ -121,7 +80,7 @@ We address two questions:
 
 TODO: contributions paragraph.
 
-\subsection{2 Previous work and gaps}\label{previous-work-and-gaps}
+\section{Previous work and gaps}\label{previous-work-and-gaps}
 
 \begin{quote}
 TODO: the summaries below come from abstracts and publisher records;
@@ -192,9 +151,9 @@ This study addresses gaps 1 to 3 directly, through placement for
 Greenland surface melt across present, near-future and long-future
 windows (Q1 and Q2). TODO: gap 4, depending on the baseline decision.
 
-\subsection{3 Data}\label{data}
+\section{Data}\label{data}
 
-\subsubsection{3.1 HIRHAM5 simulations}\label{hirham5-simulations}
+\subsection{HIRHAM5 simulations}\label{hirham5-simulations}
 
 HIRHAM5 is a regional climate model from the Danish Meteorological
 Institute that combines HIRLAM dynamics with ECHAM5 physics on a 0.05
@@ -205,7 +164,7 @@ percolation, retention and refreezing \citep{langen2017}; see also
 and EC-Earth3. TODO: period, scenario and variables of each run (the
 near-future runs in particular).
 
-\subsubsection{3.2 PROMICE and GC-Net automatic weather
+\subsection{PROMICE and GC-Net automatic weather
 stations}\label{promice-and-gc-net-automatic-weather-stations}
 
 The Programme for Monitoring of the Greenland Ice Sheet (PROMICE) has
@@ -289,41 +248,40 @@ compared against. TODO: which sites (operational in which years, given
 the 2015-2016 analysis years), and whether historical GC-Net sites are
 included.
 
-\subsubsection{3.3 Climate windows and data
+\subsection{Climate windows and data
 split}\label{climate-windows-and-data-split}
 
 We analyse two windows. Within each, model training and sensor placement
 years do not overlap.
 
-{\def\LTcaptype{none} % do not increment counter
-\begin{longtable}[]{@{}lllll@{}}
-\toprule\noalign{}
-Window & Train & Sensor placement & & \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-Present & 1990-2014 (25 yr) & 2016 & & \\
-Near future & 2035-2059 (25 yr) & 2060 & & \\
-Long future & 2075-2099 (25 yr) & 2100 & & \\
-\end{longtable}
-}
+\begin{table}[t]
+\begin{tabular}{lll}
+\tophline
+Window & Train & Sensor placement \\
+\middlehline
+Present & 1990-2014 (25 yr) & 2016 \\
+Near future & 2035-2059 (25 yr) & 2060 \\
+Long future & 2075-2099 (25 yr) & 2100 \\
+\bottomhline
+\end{tabular}
+\belowtable{}
+\end{table}
 
 The present window matches the years assessed in
 \citet{schlager_preprint} (1990-2016). One model is trained per window
 and driving dataset because regime matters more than the driving model
 \citep{schlager_preprint}.
 
-\subsection{4 Methods}\label{methods}
+\section{Methods}\label{methods}
 
-\subsubsection{4.1 Emulator}\label{emulator}
+\subsection{Emulator}\label{emulator}
 
 We use a convolutional conditional neural process (ConvCNP)
 \citep{gordon2020} to predict daily melt. TODO: inputs, architecture,
 loss, optimiser, number of seeds (planned: at least five per window),
 seed selection (training and search years only).
 
-\subsubsection{4.2 Sensor placement
+\subsection{Sensor placement
 experiment}\label{sensor-placement-experiment}
 
 We follow the design of \citet{andersson2023}: context stations fixed at
@@ -335,7 +293,7 @@ for search and analysis, the cross-window regret matrix for Q2. The
 sensitivity of placements to the search grid spacing is tested in
 Appendix A.
 
-\subsubsection{4.3 Evaluation}\label{evaluation}
+\subsection{Evaluation}\label{evaluation}
 
 We assess the trained ConvCNP model's ability to reconstruct surface
 melt fields by analysing results from daily test tasks in the 2015-2016
@@ -351,82 +309,32 @@ melt total (Gt) and the melt extent (km\^{}2), for each analysis year.
 TODO: units of RMSE, MAE and MBE (not labelled on the source plots), and
 per-year spread relative to the window average.
 
-\subsection{5 Results}\label{results}
+\section{Results}\label{results}
 
-\subsubsection{5.1 Emulator evaluation}\label{emulator-evaluation}
+\subsection{Emulator evaluation}\label{emulator-evaluation}
 
 Table 1 gives the results for 2016, 2060 and 2100 (evaluation plots in
 \texttt{figures/evaluation/}). Percentages are derived as (predicted -
 true) / true.
 
-\begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
-  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
-  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
-  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
-  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
-  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
-  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}
-  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1250}}@{}}
-\caption{Table 1. Emulator evaluation per year and driving dataset. 2060
-and 2100 are only available for CESM2 and EC-Earth3.}\tabularnewline
-\toprule\noalign{}
-\begin{minipage}[b]{\linewidth}\raggedright
-Year
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Driving
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-RMSE
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-MAE
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-MBE
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Total melt true -\textgreater{} predicted (Gt)
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Total bias
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Melt extent bias
-\end{minipage} \\
-\midrule\noalign{}
-\endfirsthead
-\toprule\noalign{}
-\begin{minipage}[b]{\linewidth}\raggedright
-Year
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Driving
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-RMSE
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-MAE
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-MBE
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Total melt true -\textgreater{} predicted (Gt)
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Total bias
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Melt extent bias
-\end{minipage} \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-2016 & ERA-Interim & 1.53 & 0.33 & -0.23 & 757 -\textgreater{} 607 &
--19.8\% & -3.3\% \\
-2016 & CESM2 & 1.61 & 0.41 & +0.21 & 863 -\textgreater{} 1003 & +16.2\%
-& +28.4\% \\
-2016 & EC-Earth3 & 1.38 & 0.35 & -0.02 & 899 -\textgreater{} 886 &
--1.4\% & +20.0\% \\
-2060 & CESM2 & 2.10 & 0.70 & +0.03 & 1850 -\textgreater{} 1872 & +1.2\%
-& +3.3\% \\
-2060 & EC-Earth3 & 2.07 & 0.62 & +0.10 & 1663 -\textgreater{} 1726 &
-+3.8\% & +13.4\% \\
-2100 & CESM2 & 3.67 & 1.24 & +0.81 & 3424 -\textgreater{} 3956 & +15.5\%
-& +8.8\% \\
-2100 & EC-Earth3 & 3.57 & 1.26 & +0.87 & 2787 -\textgreater{} 3359 &
-+20.5\% & +14.4\% \\
-\end{longtable}
+\begin{table*}[t]
+\caption{Emulator evaluation per year and driving dataset. 2060 and 2100 are only
+available for CESM2 and EC-Earth3.}
+\begin{tabular}{>{\raggedright\arraybackslash}p{\dimexpr(\textwidth-16\tabcolsep)*125/1000\relax}>{\raggedright\arraybackslash}p{\dimexpr(\textwidth-16\tabcolsep)*125/1000\relax}>{\raggedright\arraybackslash}p{\dimexpr(\textwidth-16\tabcolsep)*125/1000\relax}>{\raggedright\arraybackslash}p{\dimexpr(\textwidth-16\tabcolsep)*125/1000\relax}>{\raggedright\arraybackslash}p{\dimexpr(\textwidth-16\tabcolsep)*125/1000\relax}>{\raggedright\arraybackslash}p{\dimexpr(\textwidth-16\tabcolsep)*125/1000\relax}>{\raggedright\arraybackslash}p{\dimexpr(\textwidth-16\tabcolsep)*125/1000\relax}>{\raggedright\arraybackslash}p{\dimexpr(\textwidth-16\tabcolsep)*125/1000\relax}}
+\tophline
+Year & Driving & RMSE & MAE & MBE & Total melt true -\textgreater{} predicted (Gt) & Total bias & Melt extent bias \\
+\middlehline
+2016 & ERA-Interim & 1.53 & 0.33 & -0.23 & 757 -\textgreater{} 607 & -19.8\% & -3.3\% \\
+2016 & CESM2 & 1.61 & 0.41 & +0.21 & 863 -\textgreater{} 1003 & +16.2\% & +28.4\% \\
+2016 & EC-Earth3 & 1.38 & 0.35 & -0.02 & 899 -\textgreater{} 886 & -1.4\% & +20.0\% \\
+2060 & CESM2 & 2.10 & 0.70 & +0.03 & 1850 -\textgreater{} 1872 & +1.2\% & +3.3\% \\
+2060 & EC-Earth3 & 2.07 & 0.62 & +0.10 & 1663 -\textgreater{} 1726 & +3.8\% & +13.4\% \\
+2100 & CESM2 & 3.67 & 1.24 & +0.81 & 3424 -\textgreater{} 3956 & +15.5\% & +8.8\% \\
+2100 & EC-Earth3 & 3.57 & 1.26 & +0.87 & 2787 -\textgreater{} 3359 & +20.5\% & +14.4\% \\
+\bottomhline
+\end{tabular}
+\belowtable{}
+\end{table*}
 
 Observations from Table 1 and the maps:
 
@@ -456,13 +364,12 @@ Observations from Table 1 and the maps:
   compare each analysis year with the window average melt.
 \end{itemize}
 
-\subsubsection{5.2 Sensor placement
-results}\label{sensor-placement-results}
+\subsection{Sensor placement results}\label{sensor-placement-results}
 
 TODO: Q1 (present window) and Q2 (near and long future; no-regret versus
 future-only locations).
 
-\subsection{6 Discussion}\label{discussion}
+\section{Discussion}\label{discussion}
 
 \textbf{Transferability.} The growth in error with warming is consistent
 with the finding that emulators transfer poorly across climate regimes
@@ -479,11 +386,15 @@ with HIRHAM5 and inherits its biases. The sensor placement seeach and
 analysis uses one year per window. The one-year search is short. TODO:
 add further limitations as the experiments mature.
 
-\subsection{7 Conclusions}\label{conclusions}
+\conclusions
 
 TODO.
 
-\subsection{Appendix A: Sensitivity to search
+\codedataavailability{TODO.}
+
+\appendix
+
+\section{Sensitivity to search
 resolution}\label{appendix-a-sensitivity-to-search-resolution}
 
 This appendix tests whether the proposed placements depend on the
@@ -515,7 +426,7 @@ Table A1: top-K overlap, analysis metrics and cost per spacing.
 \textbf{Choice for the main experiments.} TODO: state the spacing used
 in Section 4.2 and why.
 
-\subsection{Appendix B: Transfer learning across climate
+\section{Transfer learning across climate
 windows}\label{appendix-b-transfer-learning-across-climate-windows}
 
 This appendix tests whether a model trained on the present window can be
@@ -558,17 +469,17 @@ with those of the window-specific model.
 \textbf{Results.} TODO. Table B1: metrics per model, window and driving
 dataset. Figure B1: skill against the number of fine-tuning years.
 
-\subsection{Data and code
-availability}\label{data-and-code-availability}
+\noappendix
 
+\authorcontribution{TODO.}
+
+\competinginterests{TODO.}
+
+\begin{acknowledgements}
 TODO.
+\end{acknowledgements}
 
-\subsection{Acknowledgements}\label{acknowledgements}
-
-TODO.
-
-\subsection{References}\label{references}
-
+\bibliographystyle{copernicus}
 \bibliography{references.bib}
 
 \end{document}

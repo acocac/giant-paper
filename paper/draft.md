@@ -65,7 +65,7 @@ We use the network in two ways. TODO: confirm both. First, the station locations
 We analyse two windows. Within each, model training and sensor placement years do not overlap. 
 
 | Window | Train | Sensor placement |
-|---|---|---|---|---|
+|---|---|---|
 | Present | 1990-2014 (25 yr) | 2016 |
 | Near future | 2035-2059 (25 yr) | 2060 |
 | Long future | 2075-2099 (25 yr) | 2100 |

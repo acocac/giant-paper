@@ -1,0 +1,52 @@
+%% Generated from paper/draft.md by `make overleaf` (pandoc + paper/copernicus/).
+%% Edit draft.md, not this file: it is overwritten on every build.
+%% Copernicus Publications LaTeX package 7.16, The Cryosphere (tc), manuscript (discussion) layout.
+\documentclass[tc, manuscript]{copernicus}
+
+%% Helpers for pandoc output
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+\begin{document}
+
+\title{$title$}
+
+$if(authors)$
+$for(authors)$
+\Author[$it.affil$]$if(it.email)$[$it.email$]$endif${$it.given$}{$it.surname$}
+$endfor$
+
+$for(affiliations)$
+\affil[$it.id$]{$it.address$}
+$endfor$
+$else$
+%% TODO: authors and affiliations. Add `authors` and `affiliations` to the YAML header of draft.md:
+%%   authors:      [{given: Ana, surname: Smith, affil: 1, email: ana@example.org}]
+%%   affiliations: [{id: 1, address: "Institute, City, Country"}]
+\Author[1][TODO@example.org]{TODO}{TODO}
+\affil[1]{TODO}
+$endif$
+
+\runningtitle{$if(runningtitle)$$runningtitle$$else$TODO$endif$}
+
+\runningauthor{$if(runningauthor)$$runningauthor$$else$TODO$endif$}
+
+\received{}
+\pubdiscuss{}
+\revised{}
+\accepted{}
+\published{}
+
+\firstpage{1}
+
+\maketitle
+
+\begin{abstract}
+$if(abstract)$$abstract$$else$TODO$endif$
+\end{abstract}
+
+$body$
+
+\bibliographystyle{copernicus}
+\bibliography{references.bib}
+
+\end{document}
